@@ -1,0 +1,76 @@
+# 淘宝价格监测系统 - 启动说明
+
+由于IDE终端存在编码问题，请按照以下步骤手动启动服务：
+
+## 🚀 方法一：双击批处理文件（推荐）
+
+### 1. 启动后端服务
+双击运行：[一键启动后端.bat](e:\NewProject\taobao\一键启动后端.bat)
+
+等待看到提示：`Application startup complete`
+
+### 2. 启动前端服务  
+双击运行：[一键启动前端.bat](e:\NewProject\taobao\一键启动前端.bat)
+
+等待看到提示：`Local: http://localhost:3000/`
+
+### 3. 访问系统
+打开浏览器访问：http://localhost:3000
+
+---
+
+## 💻 方法二：手动命令行启动
+
+### 1. 启动后端服务
+打开命令提示符（Win+R → 输入 cmd → 回车），执行：
+```cmd
+cd e:\NewProject\taobao\backend
+python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### 2. 启动前端服务
+再打开一个命令提示符，执行：
+```cmd
+cd e:\NewProject\taobao\frontend
+npm run dev
+```
+
+### 3. 访问系统
+打开浏览器访问：http://localhost:3000
+
+---
+
+## ✅ 启动成功标志
+
+### 后端服务：
+```
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000
+```
+
+### 前端服务：
+```
+VITE v4.x.x  ready in xxx ms
+
+➜  Local:   http://localhost:3000/
+➜  Network: use --host to expose
+```
+
+---
+
+## 🔧 价格采集测试
+
+服务启动后：
+1. 访问 http://localhost:3000
+2. 在商品列表中点击"立即采集"按钮
+3. 等待约10-15秒，系统会弹出Edge浏览器访问淘宝页面
+4. 浏览器自动关闭后，页面显示采集到的真实价格
+
+---
+
+## 📋 当前状态
+
+- ✅ 淘宝登录成功（用户：小朱tony）
+- ✅ Cookie已保存且有效
+- ✅ 价格采集代码已修复
+- ✅ 测试采集成功（获取到真实价格 ¥349.36）

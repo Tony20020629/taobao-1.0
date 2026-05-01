@@ -1,0 +1,47 @@
+# 依赖文件
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.conda/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 数据库文件（包含敏感数据）
+*.db
+*.sqlite
+*.sqlite3
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
+.cache/
+
+# 浏览器Cookies（包含登录信息）
+*.json
+!package.json
+
+# 调试截图
+debug_*.png
+
+# 虚拟环境
+.venv/
+env.bak/
