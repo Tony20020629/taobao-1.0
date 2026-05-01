@@ -51,9 +51,9 @@ class TaobaoPriceCollector:
                 break
         
         if browser_path:
-            # 使用Edge浏览器 - 有头模式（淘宝反爬严格，无头模式会被拦截）
+            # 使用Edge浏览器 - 无头模式（后台运行，不弹出窗口）
             browser = await playwright.chromium.launch(
-                headless=False,
+                headless=True,
                 executable_path=browser_path,
                 args=[
                     "--disable-blink-features=AutomationControlled",
@@ -65,18 +65,18 @@ class TaobaoPriceCollector:
                     "--disable-software-rasterizer",
                 ]
             )
-            print("[采集] 已使用Edge浏览器启动（有头模式-避免反爬拦截）")
+            print("[采集] 已使用Edge浏览器启动（无头模式-后台运行）")
         else:
             # 备用Chromium
             browser = await playwright.chromium.launch(
-                headless=False,
+                headless=True,
                 args=[
                     "--disable-blink-features=AutomationControlled",
                     "--no-sandbox",
                     "--window-size=1920,1080",
                 ]
             )
-            print("[采集] 已使用Chromium浏览器启动（有头模式-避免反爬拦截）")
+            print("[采集] 已使用Chromium浏览器启动（无头模式-后台运行）")
         
         return browser
     

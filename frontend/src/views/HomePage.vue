@@ -80,22 +80,22 @@
               <el-table-column prop="name" label="商品名称" min-width="200" />
               <el-table-column prop="current_price" label="当前价格" width="120">
                 <template #default="{ row }">
-                  <span style="color: #f56c6c; font-weight: bold;">¥{{ row.current_price || '0.00' }}</span>
+                  <span style="color: #f56c6c; font-weight: bold;">¥{{ formatPrice(row.current_price) }}</span>
                 </template>
               </el-table-column>
               <el-table-column prop="avg_price" label="均价" width="120">
                 <template #default="{ row }">
-                  ¥{{ row.avg_price || '0.00' }}
+                  ¥{{ formatPrice(row.avg_price) }}
                 </template>
               </el-table-column>
               <el-table-column prop="min_price" label="最低价" width="120">
                 <template #default="{ row }">
-                  <span style="color: #67c23a; font-weight: bold;">¥{{ row.min_price || '0.00' }}</span>
+                  <span style="color: #67c23a; font-weight: bold;">¥{{ formatPrice(row.min_price) }}</span>
                 </template>
               </el-table-column>
               <el-table-column prop="max_price" label="最高价" width="120">
                 <template #default="{ row }">
-                  ¥{{ row.max_price || '0.00' }}
+                  ¥{{ formatPrice(row.max_price) }}
                 </template>
               </el-table-column>
               <el-table-column label="监测频率" width="120">
@@ -155,7 +155,24 @@ onMounted(() => {
   loadGoodsList()
   loadStats()
   setInterval(loadStats, 30000)
+  setInterval(autoRefreshGoods, 60000)
 })
+
+const autoRefreshGoods = async () => {
+  try {
+    const data = await goodsAPI.getList()
+    const hasPriceUpdate = data.some((item, index) => {
+      const oldItem = goodsList.value[index]
+      return oldItem && item.current_price !== oldItem.current_price
+    })
+    if (hasPriceUpdate) {
+      goodsList.value = data
+      ElMessage.info('价格数据已更新')
+    }
+  } catch (error) {
+    // 静默失败
+  }
+}
 
 const loadGoodsList = async () => {
   try {
@@ -241,6 +258,11 @@ const formatFrequency = (minutes) => {
   if (minutes < 60) return `${minutes}分钟`
   if (minutes < 1440) return `${minutes / 60}小时`
   return `${minutes / 1440}天`
+}
+
+const formatPrice = (price) => {
+  if (!price || price === 0) return '0.00'
+  return parseFloat(price).toFixed(2)
 }
 </script>
 

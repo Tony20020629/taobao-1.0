@@ -171,7 +171,7 @@ class PriceMonitorScheduler:
         cursor.execute(
             """UPDATE goods 
                SET current_price = ?,
-                   avg_price = (SELECT AVG(price) FROM price_history WHERE goods_id = ?),
+                   avg_price = ROUND((SELECT AVG(price) FROM price_history WHERE goods_id = ?), 2),
                    min_price = (SELECT MIN(price) FROM price_history WHERE goods_id = ?),
                    max_price = (SELECT MAX(price) FROM price_history WHERE goods_id = ?),
                    updated_at = CURRENT_TIMESTAMP
